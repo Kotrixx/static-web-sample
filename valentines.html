@@ -1,0 +1,1650 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>💌 ¿Quieres ser mi Valentín?</title>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Permanent+Marker&family=VT323&family=Caveat:wght@400;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Bungee+Shade&family=Rubik+Mono+One&display=swap"
+    rel="stylesheet">
+  <style>
+    :root {
+      --neon-pink: #ff2d87;
+      --neon-green: #39ff14;
+      --neon-yellow: #ffe600;
+      --neon-cyan: #00fff7;
+      --cream: #fdf0d5;
+      --dark: #08060e;
+      --gold: #d4a017;
+      --purple: #6c3483;
+      --cat-o: #e8802a;
+      --cat-l: #f4a940;
+      --yellow: #f4d03f;
+      --blush: #ffb3c6;
+      --rose: #e63946;
+      --chicha-pink: #ff1493;
+      --chicha-orange: #ff6600;
+      --chicha-green: #00cc44;
+      --chicha-red: #ff0033;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box
+    }
+
+    body {
+      font-family: 'VT323', monospace;
+      background: var(--dark);
+      color: var(--cream);
+      overflow-x: hidden;
+      min-height: 100vh
+    }
+
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background: repeating-linear-gradient(45deg, transparent, transparent 30px, rgba(255, 20, 147, .02) 30px, rgba(255, 20, 147, .02) 32px),
+        repeating-linear-gradient(-45deg, transparent, transparent 30px, rgba(0, 255, 247, .02) 30px, rgba(0, 255, 247, .02) 32px),
+        repeating-linear-gradient(90deg, transparent, transparent 60px, rgba(255, 230, 0, .015) 60px, rgba(255, 230, 0, .015) 62px);
+      pointer-events: none;
+      z-index: 0
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.05'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 1000
+    }
+
+    .scene {
+      position: relative;
+      width: 100%;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem 1rem;
+      transition: opacity .8s, transform .8s;
+      z-index: 2
+    }
+
+    .scene.hidden {
+      opacity: 0;
+      pointer-events: none;
+      position: absolute;
+      transform: scale(.95)
+    }
+
+    @keyframes chichaGlow {
+      0% {
+        border-color: var(--chicha-pink);
+        box-shadow: 0 0 15px rgba(255, 20, 147, .3), inset 0 0 15px rgba(255, 20, 147, .05)
+      }
+
+      25% {
+        border-color: var(--neon-yellow);
+        box-shadow: 0 0 15px rgba(255, 230, 0, .3), inset 0 0 15px rgba(255, 230, 0, .05)
+      }
+
+      50% {
+        border-color: var(--neon-cyan);
+        box-shadow: 0 0 15px rgba(0, 255, 247, .3), inset 0 0 15px rgba(0, 255, 247, .05)
+      }
+
+      75% {
+        border-color: var(--neon-green);
+        box-shadow: 0 0 15px rgba(57, 255, 20, .3), inset 0 0 15px rgba(57, 255, 20, .05)
+      }
+
+      100% {
+        border-color: var(--chicha-pink);
+        box-shadow: 0 0 15px rgba(255, 20, 147, .3), inset 0 0 15px rgba(255, 20, 147, .05)
+      }
+    }
+
+    .particles {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 1;
+      overflow: hidden
+    }
+
+    .particle {
+      position: absolute;
+      animation: pFloat linear infinite;
+      opacity: 0
+    }
+
+    @keyframes pFloat {
+      0% {
+        transform: translateY(105vh) rotate(0);
+        opacity: 0
+      }
+
+      5% {
+        opacity: .45
+      }
+
+      90% {
+        opacity: .45
+      }
+
+      100% {
+        transform: translateY(-5vh) rotate(360deg);
+        opacity: 0
+      }
+    }
+
+    .cat-wrap {
+      position: relative;
+      width: 220px;
+      height: 280px;
+      margin: 0 auto 1.5rem;
+      animation: catF 3s ease-in-out infinite alternate
+    }
+
+    @keyframes catF {
+      to {
+        transform: translateY(-10px)
+      }
+    }
+
+    .cat-svg {
+      width: 100%;
+      height: 100%;
+      filter: drop-shadow(0 10px 30px rgba(232, 128, 42, .3))
+    }
+
+    /* === CAT ANIMATIONS === */
+    .blush {
+      animation: blP 2s ease-in-out infinite alternate
+    }
+
+    @keyframes blP {
+      0% {
+        opacity: .3
+      }
+
+      to {
+        opacity: .6
+      }
+    }
+
+    .tail {
+      animation: tW 1.5s ease-in-out infinite alternate;
+      transform-origin: 30% 95%
+    }
+
+    @keyframes tW {
+      0% {
+        transform: rotate(-8deg)
+      }
+
+      to {
+        transform: rotate(8deg)
+      }
+    }
+
+    .eye-blink {
+      animation: blnk 4s ease-in-out infinite
+    }
+
+    @keyframes blnk {
+
+      0%,
+      42%,
+      44%,
+      100% {
+        transform: scaleY(1)
+      }
+
+      43% {
+        transform: scaleY(.1)
+      }
+    }
+
+    /* Intro: adjusting tie */
+    @keyframes adjustTie {
+
+      0%,
+      100% {
+        transform: translateY(0) rotate(0)
+      }
+
+      15% {
+        transform: translateY(-3px) rotate(-2deg)
+      }
+
+      30% {
+        transform: translateY(-1px) rotate(1deg)
+      }
+
+      50% {
+        transform: translateY(-4px) rotate(-1deg)
+      }
+
+      70% {
+        transform: translateY(-2px) rotate(2deg)
+      }
+
+      85% {
+        transform: translateY(0) rotate(0)
+      }
+    }
+
+    .tie-adjust {
+      animation: adjustTie 3s ease-in-out infinite
+    }
+
+    /* Intro: arm reaching to tie */
+    @keyframes armReachTie {
+
+      0%,
+      100% {
+        transform: rotate(0)
+      }
+
+      20% {
+        transform: rotate(15deg) translateX(8px) translateY(-10px)
+      }
+
+      50% {
+        transform: rotate(10deg) translateX(5px) translateY(-8px)
+      }
+
+      80% {
+        transform: rotate(5deg) translateX(2px) translateY(-3px)
+      }
+    }
+
+    .arm-tie-r {
+      animation: armReachTie 3s ease-in-out infinite;
+      transform-origin: 50% 20%
+    }
+
+    /* Poem: thoughtful head tilt */
+    @keyframes headTilt {
+
+      0%,
+      100% {
+        transform: rotate(0) translateY(0)
+      }
+
+      30% {
+        transform: rotate(-3deg) translateY(-2px)
+      }
+
+      70% {
+        transform: rotate(2deg) translateY(-1px)
+      }
+    }
+
+    .head-tilt {
+      animation: headTilt 4s ease-in-out infinite
+    }
+
+    /* Poem: paw gesture */
+    @keyframes pawGesture {
+
+      0%,
+      100% {
+        transform: rotate(0)
+      }
+
+      25% {
+        transform: rotate(-15deg) translateY(-5px)
+      }
+
+      50% {
+        transform: rotate(-10deg) translateY(-8px)
+      }
+
+      75% {
+        transform: rotate(-5deg) translateY(-3px)
+      }
+    }
+
+    .paw-gesture {
+      animation: pawGesture 3.5s ease-in-out infinite;
+      transform-origin: 50% 20%
+    }
+
+    /* Nervous: trembling */
+    @keyframes tremble {
+
+      0%,
+      100% {
+        transform: translateX(0)
+      }
+
+      10% {
+        transform: translateX(-2px)
+      }
+
+      20% {
+        transform: translateX(2px)
+      }
+
+      30% {
+        transform: translateX(-1px)
+      }
+
+      40% {
+        transform: translateX(1px)
+      }
+
+      50% {
+        transform: translateX(-2px)
+      }
+
+      60% {
+        transform: translateX(1px)
+      }
+
+      70% {
+        transform: translateX(0)
+      }
+    }
+
+    .tremble {
+      animation: tremble 1s ease-in-out infinite
+    }
+
+    /* Nervous: rose shaking in paw */
+    @keyframes roseShake {
+
+      0%,
+      100% {
+        transform: translate(155px, 210px) rotate(-30deg)
+      }
+
+      25% {
+        transform: translate(155px, 208px) rotate(-35deg)
+      }
+
+      50% {
+        transform: translate(156px, 210px) rotate(-25deg)
+      }
+
+      75% {
+        transform: translate(154px, 209px) rotate(-33deg)
+      }
+    }
+
+    .rose-shake {
+      animation: roseShake .5s ease-in-out infinite
+    }
+
+    /* Celebrate: jumping arms */
+    @keyframes celebJump {
+
+      0%,
+      100% {
+        transform: translateY(0) scale(1)
+      }
+
+      50% {
+        transform: translateY(-15px) scale(1.03)
+      }
+    }
+
+    .celeb-jump {
+      animation: celebJump .5s ease-in-out infinite
+    }
+
+    @keyframes armWave {
+
+      0%,
+      100% {
+        transform: rotate(-30deg)
+      }
+
+      50% {
+        transform: rotate(-50deg)
+      }
+    }
+
+    .arm-wave-l {
+      animation: armWave .4s ease-in-out infinite;
+      transform-origin: 62px 170px
+    }
+
+    .arm-wave-r {
+      animation: armWave .4s ease-in-out infinite reverse;
+      transform-origin: 169px 170px
+    }
+
+    /* Sad: drooping */
+    @keyframes sadDroop {
+
+      0%,
+      100% {
+        transform: translateY(0)
+      }
+
+      50% {
+        transform: translateY(3px)
+      }
+    }
+
+    .sad-droop {
+      animation: sadDroop 3s ease-in-out infinite
+    }
+
+    @keyframes earDroop {
+
+      0%,
+      100% {
+        transform: rotate(0)
+      }
+
+      50% {
+        transform: rotate(5deg)
+      }
+    }
+
+    .ear-droop-l {
+      animation: earDroop 3s ease-in-out infinite;
+      transform-origin: 70px 80px
+    }
+
+    .ear-droop-r {
+      animation: earDroop 3s ease-in-out infinite reverse;
+      transform-origin: 150px 80px
+    }
+
+    .card {
+      text-align: center;
+      max-width: 520px;
+      padding: 2.5rem 2rem;
+      border: 3px solid var(--chicha-pink);
+      position: relative;
+      background: rgba(8, 6, 14, .9);
+      backdrop-filter: blur(10px);
+      animation: cApp 1s ease-out, chichaGlow 6s linear infinite
+    }
+
+    @keyframes cApp {
+      from {
+        opacity: 0;
+        transform: translateY(30px) scale(.95)
+      }
+    }
+
+    .chicha-banner {
+      position: absolute;
+      top: -18px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: linear-gradient(90deg, var(--chicha-pink), var(--chicha-orange), var(--neon-yellow), var(--chicha-green), var(--neon-cyan));
+      padding: 3px 1.5rem;
+      font-family: 'Rubik Mono One', monospace;
+      font-size: .65rem;
+      color: var(--dark);
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      white-space: nowrap
+    }
+
+    .chicha-banner::before,
+    .chicha-banner::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      width: 8px;
+      height: 100%
+    }
+
+    .chicha-banner::before {
+      left: -8px;
+      background: linear-gradient(135deg, transparent 50%, var(--chicha-pink) 50%)
+    }
+
+    .chicha-banner::after {
+      right: -8px;
+      background: linear-gradient(225deg, transparent 50%, var(--neon-cyan) 50%)
+    }
+
+    .chicha-zig {
+      position: absolute;
+      bottom: -12px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 80%;
+      height: 12px;
+      background: repeating-linear-gradient(90deg, var(--chicha-pink) 0px, var(--chicha-pink) 12px, var(--neon-yellow) 12px, var(--neon-yellow) 24px, var(--neon-cyan) 24px, var(--neon-cyan) 36px, var(--neon-green) 36px, var(--neon-green) 48px);
+      clip-path: polygon(0% 0%, 4% 100%, 8% 0%, 12% 100%, 16% 0%, 20% 100%, 24% 0%, 28% 100%, 32% 0%, 36% 100%, 40% 0%, 44% 100%, 48% 0%, 52% 100%, 56% 0%, 60% 100%, 64% 0%, 68% 100%, 72% 0%, 76% 100%, 80% 0%, 84% 100%, 88% 0%, 92% 100%, 96% 0%, 100% 100%)
+    }
+
+    .tape {
+      position: absolute;
+      background: rgba(244, 208, 63, .18);
+      height: 20px;
+      width: 55px
+    }
+
+    .tape.tl {
+      top: -7px;
+      left: -12px;
+      transform: rotate(-35deg)
+    }
+
+    .tape.tr {
+      top: -7px;
+      right: -12px;
+      transform: rotate(35deg)
+    }
+
+    .tape.bl {
+      bottom: -7px;
+      left: -12px;
+      transform: rotate(35deg)
+    }
+
+    .tape.br {
+      bottom: -7px;
+      right: -12px;
+      transform: rotate(-35deg)
+    }
+
+    .greeting {
+      font-family: 'Caveat', cursive;
+      font-size: 1.3rem;
+      color: var(--cat-l);
+      margin-bottom: .5rem
+    }
+
+    .main-title {
+      font-family: 'Permanent Marker', cursive;
+      font-size: 2.6rem;
+      line-height: 1.15;
+      color: var(--neon-yellow);
+      text-shadow: 0 0 10px rgba(255, 230, 0, .4), 3px 3px 0 var(--chicha-pink), -1px -1px 0 var(--neon-cyan);
+      margin: .8rem 0
+    }
+
+    .subtitle {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: 1.1rem;
+      color: var(--blush);
+      margin-bottom: 1.5rem;
+      line-height: 1.5
+    }
+
+    .venue {
+      font-size: .85rem;
+      letter-spacing: 5px;
+      color: var(--neon-cyan);
+      text-transform: uppercase;
+      margin-bottom: 1.2rem;
+      opacity: .8;
+      text-shadow: 0 0 6px rgba(0, 255, 247, .3)
+    }
+
+    .btn {
+      font-family: 'Permanent Marker', cursive;
+      font-size: 1.5rem;
+      border: none;
+      padding: .9rem 2.5rem;
+      cursor: pointer;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      transition: all .25s;
+      display: inline-block;
+      margin: .4rem
+    }
+
+    .btn-main {
+      background: linear-gradient(90deg, var(--chicha-pink), var(--chicha-orange));
+      color: #fff;
+      clip-path: polygon(2% 0%, 100% 3%, 97% 100%, 0% 96%);
+      text-shadow: 1px 1px 0 rgba(0, 0, 0, .3)
+    }
+
+    .btn-main:hover {
+      background: linear-gradient(90deg, var(--neon-yellow), var(--chicha-orange));
+      color: var(--dark);
+      transform: scale(1.06) rotate(-1deg);
+      box-shadow: 0 0 25px rgba(255, 230, 0, .5)
+    }
+
+    .btn-shy {
+      background: 0;
+      color: var(--cream);
+      border: 2px solid rgba(253, 240, 213, .3);
+      font-size: 1.1rem
+    }
+
+    .btn-shy:hover {
+      border-color: var(--neon-cyan);
+      color: var(--neon-cyan);
+      transform: scale(1.04)
+    }
+
+    .poem-text {
+      font-family: 'Caveat', cursive;
+      font-size: 1.55rem;
+      line-height: 1.8;
+      color: var(--cream);
+      margin: 1.5rem 0;
+      opacity: 0;
+      transform: translateY(15px);
+      transition: all .8s
+    }
+
+    .poem-text.vis {
+      opacity: 1;
+      transform: translateY(0)
+    }
+
+    .poem-text em {
+      color: var(--neon-yellow);
+      font-style: normal;
+      text-shadow: 0 0 8px rgba(255, 230, 0, .3)
+    }
+
+    .poem-text strong {
+      color: var(--neon-cyan);
+      font-weight: normal;
+      text-shadow: 0 0 8px rgba(0, 255, 247, .3)
+    }
+
+    .poem-author {
+      font-family: 'Permanent Marker', cursive;
+      font-size: 1.1rem;
+      color: var(--cat-o);
+      margin-top: 1rem;
+      opacity: 0;
+      transition: opacity 1s
+    }
+
+    .poem-author.vis {
+      opacity: 1
+    }
+
+    .big-q {
+      font-family: 'Permanent Marker', cursive;
+      font-size: 3rem;
+      color: var(--neon-yellow);
+      text-shadow: 0 0 20px rgba(255, 230, 0, .5), 0 0 60px rgba(255, 230, 0, .2), 4px 4px 0 var(--chicha-pink);
+      margin: 1rem 0 .5rem;
+      animation: qP 2s ease-in-out infinite alternate
+    }
+
+    @keyframes qP {
+      to {
+        text-shadow: 0 0 30px rgba(255, 230, 0, .7), 0 0 80px rgba(255, 230, 0, .3), 4px 4px 0 var(--chicha-pink)
+      }
+    }
+
+    .q-sub {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: 1.15rem;
+      color: var(--blush);
+      margin-bottom: 2rem
+    }
+
+    .btn-group {
+      display: flex;
+      flex-direction: column;
+      gap: .8rem;
+      align-items: center
+    }
+
+    .btn-yes {
+      background: linear-gradient(90deg, var(--rose), var(--chicha-pink));
+      color: #fff;
+      font-size: 1.8rem;
+      padding: 1rem 3rem;
+      clip-path: polygon(2% 0%, 100% 3%, 97% 100%, 0% 96%);
+      animation: yG 2s ease-in-out infinite alternate;
+      text-shadow: 1px 1px 0 rgba(0, 0, 0, .3)
+    }
+
+    @keyframes yG {
+      0% {
+        box-shadow: 0 0 15px rgba(230, 57, 70, .4)
+      }
+
+      to {
+        box-shadow: 0 0 35px rgba(255, 20, 147, .7)
+      }
+    }
+
+    .btn-yes:hover {
+      background: linear-gradient(90deg, var(--chicha-pink), var(--neon-yellow));
+      color: var(--dark);
+      transform: scale(1.12) rotate(-2deg)
+    }
+
+    .btn-no {
+      background: 0;
+      color: rgba(253, 240, 213, .4);
+      border: 1px solid rgba(253, 240, 213, .15);
+      font-size: 1rem;
+      padding: .6rem 1.5rem;
+      transition: all .3s
+    }
+
+    .hearts-burst {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 50;
+      overflow: hidden
+    }
+
+    .burst-h {
+      position: absolute;
+      font-size: 2rem;
+      animation: bF 3s ease-out forwards;
+      opacity: 0
+    }
+
+    @keyframes bF {
+      0% {
+        transform: translate(0, 0) scale(0) rotate(0);
+        opacity: 1
+      }
+
+      20% {
+        opacity: 1;
+        transform: scale(1.2)
+      }
+
+      100% {
+        transform: translate(var(--tx), var(--ty)) scale(.3) rotate(var(--rot));
+        opacity: 0
+      }
+    }
+
+    .celeb-title {
+      font-family: 'Bungee Shade', cursive;
+      font-size: 3rem;
+      color: var(--neon-yellow);
+      text-shadow: 0 0 20px rgba(255, 230, 0, .5), 3px 3px 0 var(--chicha-pink);
+      animation: cBt .6s ease-in-out infinite alternate
+    }
+
+    @keyframes cBt {
+      0% {
+        transform: scale(1) rotate(-1deg)
+      }
+
+      to {
+        transform: scale(1.05) rotate(1deg)
+      }
+    }
+
+    .celeb-msg {
+      font-family: 'Caveat', cursive;
+      font-size: 1.5rem;
+      line-height: 1.7;
+      color: var(--cream);
+      margin: 1.5rem 0
+    }
+
+    .celeb-msg em {
+      color: var(--neon-yellow);
+      font-style: normal
+    }
+
+    .date-plan {
+      background: rgba(255, 20, 147, .06);
+      border: 2px solid;
+      border-image: linear-gradient(90deg, var(--chicha-pink), var(--neon-cyan), var(--neon-yellow)) 1;
+      padding: 1.5rem;
+      margin: 1.5rem 0;
+      text-align: left
+    }
+
+    .date-plan h3 {
+      font-family: 'Rubik Mono One', monospace;
+      color: var(--neon-yellow);
+      font-size: 1rem;
+      margin-bottom: .8rem;
+      letter-spacing: 1px;
+      text-shadow: 0 0 8px rgba(255, 230, 0, .3)
+    }
+
+    .date-plan p {
+      font-family: 'Playfair Display', serif;
+      font-size: 1rem;
+      line-height: 1.7;
+      color: var(--cream);
+      opacity: .85
+    }
+
+    .music-section {
+      margin-top: 1.5rem;
+      text-align: center
+    }
+
+    /* Plan option buttons */
+    .plan-opt {
+      font-family: 'Permanent Marker', cursive;
+      font-size: 1.1rem;
+      background: rgba(255, 20, 147, .08);
+      color: var(--cream);
+      border: 1px solid rgba(255, 20, 147, .25);
+      padding: .7rem 1rem;
+      cursor: pointer;
+      transition: all .3s;
+      text-align: left;
+      width: 100%;
+    }
+
+    .plan-opt:hover {
+      background: rgba(255, 20, 147, .18);
+      border-color: var(--neon-yellow);
+      transform: translateX(5px);
+      color: var(--neon-yellow);
+    }
+
+    .plan-opt.selected {
+      background: rgba(255, 230, 0, .12);
+      border-color: var(--neon-yellow);
+      color: var(--neon-yellow);
+      transform: translateX(8px);
+      box-shadow: 0 0 15px rgba(255, 230, 0, .15);
+    }
+
+    .music-section .music-label {
+      font-family: 'Rubik Mono One', monospace;
+      font-size: .7rem;
+      letter-spacing: 3px;
+      color: var(--neon-cyan);
+      text-transform: uppercase;
+      margin-bottom: .8rem;
+      text-shadow: 0 0 6px rgba(0, 255, 247, .3)
+    }
+
+    .music-link {
+      display: inline-flex;
+      align-items: center;
+      gap: .5rem;
+      padding: .7rem 1.5rem;
+      border: 2px solid var(--chicha-pink);
+      color: var(--cream);
+      text-decoration: none;
+      font-family: 'Permanent Marker', cursive;
+      font-size: 1.1rem;
+      transition: all .3s;
+      animation: chichaGlow 6s linear infinite
+    }
+
+    .music-link:hover {
+      background: var(--chicha-pink);
+      color: var(--dark);
+      transform: scale(1.05)
+    }
+
+    .music-note {
+      font-family: 'Caveat', cursive;
+      font-size: 1rem;
+      color: var(--blush);
+      margin-top: .5rem;
+      opacity: .7;
+      font-style: italic
+    }
+
+    .sad-title {
+      font-family: 'Permanent Marker', cursive;
+      font-size: 2.2rem;
+      color: var(--purple);
+      margin: 1rem 0 .5rem
+    }
+
+    .sad-text {
+      font-family: 'Caveat', cursive;
+      font-size: 1.4rem;
+      color: var(--cream);
+      line-height: 1.6;
+      margin: 1rem 0 1.5rem;
+      opacity: .85
+    }
+
+    .tear {
+      animation: tD 2s ease-in-out infinite
+    }
+
+    @keyframes tD {
+
+      0%,
+      100% {
+        opacity: 0;
+        transform: translateY(0)
+      }
+
+      30% {
+        opacity: .8
+      }
+
+      80% {
+        opacity: .3;
+        transform: translateY(12px)
+      }
+    }
+
+    .neon-side {
+      position: fixed;
+      top: 50%;
+      width: 4px;
+      height: 40%;
+      z-index: 0;
+      pointer-events: none;
+      border-radius: 2px
+    }
+
+    .neon-side.left {
+      left: 8px;
+      transform: translateY(-50%);
+      background: linear-gradient(to bottom, transparent, var(--chicha-pink), var(--neon-yellow), var(--neon-cyan), transparent);
+      opacity: .3
+    }
+
+    .neon-side.right {
+      right: 8px;
+      transform: translateY(-50%);
+      background: linear-gradient(to bottom, transparent, var(--neon-green), var(--chicha-orange), var(--chicha-pink), transparent);
+      opacity: .3
+    }
+
+    .vinyl {
+      position: fixed;
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
+      background: radial-gradient(circle, var(--chicha-pink) 8%, transparent 9%), radial-gradient(circle, #111 15%, transparent 16%), repeating-radial-gradient(circle, transparent 20%, rgba(255, 255, 255, .03) 21%, transparent 22%), #111;
+      border: 2px solid #222;
+      animation: vS 4s linear infinite;
+      z-index: 0;
+      opacity: .25;
+      pointer-events: none
+    }
+
+    .vinyl.v1 {
+      top: 10%;
+      right: 5%
+    }
+
+    .vinyl.v2 {
+      bottom: 15%;
+      left: 4%;
+      width: 50px;
+      height: 50px;
+      animation-duration: 6s
+    }
+
+    @keyframes vS {
+      to {
+        transform: rotate(360deg)
+      }
+    }
+
+    .eq-bars {
+      position: fixed;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 3px;
+      z-index: 0;
+      opacity: .2;
+      pointer-events: none
+    }
+
+    .eq-bar {
+      width: 5px;
+      border-radius: 2px 2px 0 0;
+      animation: eqB ease-in-out infinite;
+      transform-origin: bottom
+    }
+
+    @keyframes eqB {
+
+      0%,
+      100% {
+        height: 8px
+      }
+
+      50% {
+        height: var(--mh, 30px)
+      }
+    }
+
+    .cas {
+      position: fixed;
+      top: 18%;
+      left: 3%;
+      font-size: 2rem;
+      opacity: .2;
+      animation: cFl 6s ease-in-out infinite alternate;
+      pointer-events: none;
+      z-index: 0
+    }
+
+    @keyframes cFl {
+      0% {
+        transform: translateY(0) rotate(-5deg)
+      }
+
+      to {
+        transform: translateY(-12px) rotate(5deg)
+      }
+    }
+
+    .chicha-star {
+      position: fixed;
+      pointer-events: none;
+      z-index: 0;
+      font-size: 1.5rem;
+      opacity: .15;
+      animation: starT 3s ease-in-out infinite alternate
+    }
+
+    @keyframes starT {
+      0% {
+        opacity: .1;
+        transform: scale(.8) rotate(0)
+      }
+
+      to {
+        opacity: .25;
+        transform: scale(1.1) rotate(15deg)
+      }
+    }
+
+    @media(max-width:600px) {
+      .main-title {
+        font-size: 2rem
+      }
+
+      .big-q {
+        font-size: 2.2rem
+      }
+
+      .celeb-title {
+        font-size: 2rem
+      }
+
+      .cat-wrap {
+        width: 170px;
+        height: 220px
+      }
+
+      .card,
+      .poem-wrap {
+        padding: 1.5rem 1rem
+      }
+
+      .btn {
+        font-size: 1.2rem;
+        padding: .7rem 1.8rem
+      }
+
+      .btn-yes {
+        font-size: 1.4rem
+      }
+
+      .poem-text {
+        font-size: 1.3rem
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="particles" id="particles"></div>
+  <div class="vinyl v1"></div>
+  <div class="vinyl v2"></div>
+  <div class="cas">📼</div>
+  <div class="eq-bars" id="eq-bars"></div>
+  <div class="neon-side left"></div>
+  <div class="neon-side right"></div>
+
+  <!-- SCENE 1: INTRO - adjusting tie -->
+  <div class="scene" id="scene-intro">
+    <div class="card">
+      <div class="chicha-banner">★ Gran Evento ★ San Valentín ★</div>
+      <div class="chicha-zig"></div>
+      <div class="tape tl"></div>
+      <div class="tape tr"></div>
+      <div class="tape bl"></div>
+      <div class="tape br"></div>
+      <div class="cat-wrap" id="cat-intro"></div>
+      <div class="venue">📍 Centro de Lima · entre ferias y sótanos</div>
+      <div class="greeting">*se acomoda el terno y aclara la garganta*</div>
+      <div class="main-title">Hola... tengo<br>algo que decirte</div>
+      <div class="subtitle">Un gato naranja con terno, una rosa,<br>y el coraje de un primer demo grabado en el Centro
+      </div>
+      <button class="btn btn-main" onclick="goTo('scene-poem')">Escuchar 🎵</button>
+    </div>
+  </div>
+
+  <!-- SCENE 2: POEM - thoughtful, gesturing -->
+  <div class="scene hidden" id="scene-poem"
+    style="background:radial-gradient(ellipse at 50% 50%,rgba(255,20,147,.08) 0%,transparent 60%),var(--dark)">
+    <div class="poem-wrap" style="max-width:560px;text-align:center;padding:2rem">
+      <div class="cat-wrap" style="width:150px;height:190px;margin-bottom:1rem" id="cat-poem"></div>
+      <p class="poem-text" data-d="0">Mira, no soy bueno con las palabras...</p>
+      <p class="poem-text" data-d="800">Soy solo un gato naranja con un terno prestado<br>y un playlist de <em>bandas
+          que nadie conoce</em>.</p>
+      <p class="poem-text" data-d="1600">Pero cada vez que estás cerca,<br>siento que la música suena <em>más
+          fuerte</em>,<br>como aquel sábado que fuimos a <strong>Vichama</strong> juntos.</p>
+      <p class="poem-text" data-d="2400">Desde entonces eres la canción<br>que no puedo dejar de <em>poner en
+          repeat</em>... 🎧</p>
+      <p class="poem-text" data-d="3200">Así que aquí estoy, con mi rosa 🌹<br>y una pregunta que me tiene <em>los
+          bigotes temblando</em>...</p>
+      <p class="poem-author" id="poem-author">— El Gato del Terno 🐱</p>
+      <button class="btn btn-main" style="margin-top:1.5rem;opacity:0;transition:opacity .6s" id="btn-to-q"
+        onclick="goTo('scene-question')">¿Qué pregunta? 💌</button>
+    </div>
+  </div>
+
+  <!-- SCENE 3: THE QUESTION - nervous trembling -->
+  <div class="scene hidden" id="scene-question"
+    style="background:radial-gradient(ellipse at 50% 40%,rgba(255,20,147,.1) 0%,transparent 50%),radial-gradient(ellipse at 50% 60%,rgba(232,128,42,.08) 0%,transparent 40%),var(--dark)">
+    <div class="q-card" style="text-align:center;max-width:500px;padding:2rem">
+      <div class="cat-wrap" id="cat-nervous" style="animation-duration:1.5s"></div>
+      <p class="q-sub">*temblando con la rosa en la pata*</p>
+      <div class="big-q">¿Quieres ser<br>mi Valentín?</div>
+      <p class="q-sub">🍂 Este 14 de febrero 🍂</p>
+      <div class="btn-group">
+        <button class="btn btn-yes" onclick="goTo('scene-yes')">¡Sí, quiero! 💗</button>
+        <button class="btn btn-no" id="btn-no" onmouseenter="dodgeNo()" onclick="goTo('scene-no')">Mmm... no sé</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- SCENE 4a: YES - jumping celebration -->
+  <div class="scene hidden" id="scene-yes"
+    style="background:radial-gradient(ellipse at 50% 50%,rgba(255,20,147,.12) 0%,transparent 50%),var(--dark)">
+    <div class="hearts-burst" id="hearts-burst"></div>
+    <div class="celebration" style="text-align:center;max-width:560px;padding:2rem">
+      <div class="cat-wrap" style="width:180px;height:230px;animation:none" id="cat-celebrate"></div>
+      <div class="celeb-title">¡¡¡SÍÍÍ!!!</div>
+      <div class="celeb-msg">
+        *el gato naranja salta de alegría y se le cae la rosa*<br><br>
+        ¡No puedo creerlo! ¡Voy a ser el gato con terno<br>
+        más feliz de todo el <em>Centro de Lima</em>! 🎸🍂<br><br>
+        Prometo llevarte a las mejores ferias,<br>
+        compartir mis audífonos contigo entre la gente,<br>
+        y ronronear tus canciones favoritas.
+      </div>
+      <div class="date-plan">
+        <h3>🎶 PLAN PARA EL 14</h3>
+        <p style="margin-bottom:1rem">Mira, seamos honestos... es 14 de febrero y <em
+            style="color:var(--neon-yellow)">todo Lima está lleno</em>. Pero lo importante es estar juntos (o
+          conectados), así que... ¿qué prefieres?</p>
+        <p
+          style="font-family:'Rubik Mono One',monospace;font-size:.6rem;letter-spacing:2px;color:var(--neon-cyan);margin-bottom:.5rem;opacity:.7">
+          — SI ESTAMOS JUNTOS —</p>
+        <div id="plan-options" style="display:flex;flex-direction:column;gap:.6rem">
+          <button class="plan-opt"
+            onclick="pickPlan(this,'🍕 Pedir algo rico, echarnos en el sillón y ver una peli juntos. El delivery es nuestro mejor amigo.')">🍕
+            Pedir comida y ver pelis</button>
+          <button class="plan-opt"
+            onclick="pickPlan(this,'🎮 Sesión de videojuegos hasta las 3am. El que pierde prepara el snack. No se aceptan excusas.')">🎮
+            Sesión gamer juntos</button>
+          <button class="plan-opt"
+            onclick="pickPlan(this,'🍝 Cocinar juntos algo nuevo (o intentarlo). Si sale mal, plan B: delivery. Win-win.')">🍝
+            Cocinar juntos algo nuevo</button>
+          <button class="plan-opt"
+            onclick="pickPlan(this,'🎸 Buscar algún toque underground de última hora. Si no hay, playlist de Diblue y terraza con chelas.')">🎸
+            Buscar un toque / música en vivo</button>
+        </div>
+        <p
+          style="font-family:'Rubik Mono One',monospace;font-size:.6rem;letter-spacing:2px;color:var(--chicha-pink);margin:.8rem 0 .5rem;opacity:.7">
+          — SI ESTAMOS A DISTANCIA —</p>
+        <div style="display:flex;flex-direction:column;gap:.6rem">
+          <button class="plan-opt"
+            onclick="pickPlan(this,'📞 Videollamada larga con comida pedida al mismo tiempo. Cenamos juntos aunque sea por pantalla. Puntos extra si nos vestimos bonito.')">📞
+            Videollamada + cena sincronizada</button>
+          <button class="plan-opt"
+            onclick="pickPlan(this,'🎮 Jugar algo online juntos toda la noche. Competir, cooperar, lo que sea... mientras estemos conectados.')">🎮
+            Gaming online juntos</button>
+          <button class="plan-opt"
+            onclick="pickPlan(this,'🎬 Elegir la misma peli, darle play al mismo tiempo, y comentarla por audio. Como ir al cine pero en pijama.')">🎬
+            Peli sincronizada + llamada</button>
+          <button class="plan-opt"
+            onclick="pickPlan(this,'🎧 Hacernos un playlist mutuamente con canciones que nos recuerden al otro. Lo escuchamos juntos en llamada.')">🎧
+            Intercambio de playlists</button>
+          <button class="plan-opt"
+            onclick="pickPlan(this,'✉️ Escribirnos una carta larga (sí, de texto, no de audio). De esas que se guardan y se releen en días grises.')">✉️
+            Cartas escritas el uno al otro</button>
+        </div>
+        <div id="plan-result"
+          style="display:none;margin-top:1rem;padding:1rem;background:rgba(255,230,0,.05);border-left:3px solid var(--neon-yellow)">
+          <p id="plan-text" style="font-family:'Caveat',cursive;font-size:1.3rem;color:var(--cream);line-height:1.5">
+          </p>
+          <p style="font-family:'Caveat',cursive;font-size:1.1rem;color:var(--neon-cyan);margin-top:.5rem">...o hacemos
+            todo. Tenemos toda la noche 🌙</p>
+        </div>
+      </div>
+      <div class="music-section">
+        <p class="music-label">🎵 Nuestra canción de fondo 🎵</p>
+        <div style="margin:0 auto;max-width:400px">
+          <iframe id="diblue-player" style="border:0;width:100%;height:120px;" src="" allow="autoplay"
+            seamless></iframe>
+        </div>
+        <p class="music-note">Dale play a "Momentos de Calma" de Diblue ☝️</p>
+      </div>
+      <p
+        style="font-family:'Caveat';font-size:1.3rem;color:var(--neon-yellow);margin-top:1.5rem;text-shadow:0 0 6px rgba(255,230,0,.3)">
+        — Con amor, el naranjoso 🐱🌹</p>
+    </div>
+  </div>
+
+  <!-- SCENE 4b: NO - sad drooping -->
+  <div class="scene hidden" id="scene-no"
+    style="background:radial-gradient(ellipse at 50% 50%,rgba(108,52,131,.1) 0%,transparent 50%),var(--dark)">
+    <div class="sad-wrap" style="text-align:center;max-width:480px;padding:2rem">
+      <div class="cat-wrap" style="width:170px;height:220px" id="cat-sad"></div>
+      <div class="sad-title">Oh...</div>
+      <div class="sad-text">
+        *baja las orejitas y recoge la rosa del suelo*<br><br>
+        Está bien... este gato lo entiende.<br>
+        Pero la invitación sigue en pie,<br>
+        como un vinilo que nunca deja de girar<br>
+        en algún puesto del Centro. 💿<br><br>
+        <em style="color:var(--neon-cyan)">¿Quizás... lo piensas un poquito más?</em>
+      </div>
+      <div class="music-section" style="margin-bottom:1.5rem">
+        <div style="margin:0 auto;max-width:400px">
+          <iframe style="border:0;width:100%;height:42px;"
+            src="https://bandcamp.com/EmbeddedPlayer/track=2721362616/size=small/bgcol=08060e/linkcol=6c3483/transparent=true/"
+            seamless></iframe>
+        </div>
+        <p class="music-note">ponla mientras lo piensas...</p>
+      </div>
+      <div class="btn-group" style="gap:1rem">
+        <button class="btn btn-yes" onclick="goTo('scene-yes')" style="font-size:1.4rem">Bueno... ¡Sí quiero!
+          💗</button>
+        <button class="btn btn-shy" onclick="goTo('scene-question')">Volver a pensarlo 🤔</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // === CAT SVG BUILDER ===
+    function catSVG(o) {
+      const ear = o.ears || `<polygon points="70,75 58,30 90,60" fill="#e8802a"/><polygon points="150,75 162,30 130,60" fill="#e8802a"/><polygon points="72,72 63,38 88,62" fill="#f4a940"/><polygon points="148,72 157,38 132,62" fill="#f4a940"/>`;
+      const arm = o.arms || `<rect x="45" y="160" width="22" height="60" rx="10" fill="#1a1a2e"/><rect x="153" y="160" width="22" height="60" rx="10" fill="#1a1a2e"/><circle cx="56" cy="225" r="10" fill="#e8802a"/><circle cx="164" cy="225" r="10" fill="#e8802a"/>`;
+      return `<svg class="cat-svg" viewBox="0 0 220 280" xmlns="http://www.w3.org/2000/svg">
+  <g class="${o.bodyClass || ''}">
+  <g class="tail"><path d="M45 250 Q20 240 15 210 Q10 185 25 175" stroke="#d4820a" stroke-width="8" fill="none" stroke-linecap="round"/></g>
+  <rect x="60" y="150" width="100" height="100" rx="20" fill="#1a1a2e"/>
+  <path d="M95 150 L80 190 L110 175 Z" fill="#12121f"/><path d="M125 150 L140 190 L110 175 Z" fill="#12121f"/>
+  <g class="${o.tieClass || ''}"><path d="M108 175 L103 210 L110 215 L117 210 L112 175 Z" fill="#e63946"/></g>
+  <path d="M95 155 L110 175 L125 155" fill="none" stroke="white" stroke-width="2"/>
+  ${arm}
+  <rect x="75" y="240" width="25" height="25" rx="10" fill="#1a1a2e"/><rect x="120" y="240" width="25" height="25" rx="10" fill="#1a1a2e"/>
+  <ellipse cx="87" cy="268" rx="16" ry="8" fill="#111"/><ellipse cx="133" cy="268" rx="16" ry="8" fill="#111"/>
+  <g class="${o.headClass || ''}">${ear}
+  <ellipse cx="110" cy="115" rx="55" ry="50" fill="#e8802a"/>
+  ${o.face}
+  <ellipse class="blush" cx="80" cy="122" rx="10" ry="6" fill="#ffb3c6" opacity="${o.bo || '.4'}"/>
+  <ellipse class="blush" cx="140" cy="122" rx="10" ry="6" fill="#ffb3c6" opacity="${o.bo || '.4'}"/>
+  <line x1="60" y1="115" x2="85" y2="118" stroke="#d4820a" stroke-width="1" opacity=".6"/>
+  <line x1="58" y1="125" x2="84" y2="124" stroke="#d4820a" stroke-width="1" opacity=".6"/>
+  <line x1="135" y1="118" x2="160" y2="115" stroke="#d4820a" stroke-width="1" opacity=".6"/>
+  <line x1="136" y1="124" x2="162" y2="125" stroke="#d4820a" stroke-width="1" opacity=".6"/>
+  </g>
+  ${o.extra || ''}
+  <circle cx="110" cy="200" r="3" fill="#333"/><circle cx="110" cy="215" r="3" fill="#333"/>
+  </g></svg>`;
+    }
+
+    const normalEyes = `<g class="eye-blink"><ellipse cx="93" cy="108" rx="10" ry="11" fill="white"/><ellipse cx="127" cy="108" rx="10" ry="11" fill="white"/><circle cx="96" cy="108" r="6" fill="#1a1a2e"/><circle cx="130" cy="108" r="6" fill="#1a1a2e"/><circle cx="98" cy="106" r="2" fill="white"/><circle cx="132" cy="106" r="2" fill="white"/></g><ellipse cx="110" cy="122" rx="5" ry="3.5" fill="#d4820a"/><path d="M104 128 Q110 135 116 128" stroke="#d4820a" stroke-width="1.5" fill="none"/>`;
+    const rose = `<g transform="translate(155,210) rotate(-30)"><line x1="0" y1="0" x2="0" y2="30" stroke="#2d6a2d" stroke-width="2.5"/><ellipse cx="0" cy="-2" rx="7" ry="9" fill="#e63946"/><ellipse cx="-3" cy="0" rx="5" ry="7" fill="#c0392b"/></g>`;
+
+    // INTRO: adjusting tie, right arm reaches up
+    document.getElementById('cat-intro').innerHTML = catSVG({
+      face: normalEyes,
+      tieClass: 'tie-adjust',
+      arms: `<rect x="45" y="160" width="22" height="60" rx="10" fill="#1a1a2e"/>
+  <g class="arm-tie-r"><rect x="153" y="160" width="22" height="60" rx="10" fill="#1a1a2e"/><circle cx="164" cy="225" r="10" fill="#e8802a"/></g>
+  <circle cx="56" cy="225" r="10" fill="#e8802a"/>`,
+      extra: rose
+    });
+
+    // POEM: thoughtful, head tilts, one paw gestures
+    document.getElementById('cat-poem').innerHTML = catSVG({
+      face: normalEyes,
+      headClass: 'head-tilt',
+      arms: `<g class="paw-gesture"><rect x="45" y="160" width="22" height="60" rx="10" fill="#1a1a2e"/><circle cx="56" cy="225" r="10" fill="#e8802a"/></g>
+  <rect x="153" y="160" width="22" height="60" rx="10" fill="#1a1a2e"/><circle cx="164" cy="225" r="10" fill="#e8802a"/>`
+    });
+
+    // NERVOUS: big eyes, trembling, rose shakes, sweat
+    document.getElementById('cat-nervous').innerHTML = catSVG({
+      face: `<ellipse cx="93" cy="106" rx="13" ry="14" fill="white"/><ellipse cx="127" cy="106" rx="13" ry="14" fill="white"/><circle cx="97" cy="107" r="7" fill="#1a1a2e"/><circle cx="131" cy="107" r="7" fill="#1a1a2e"/><circle cx="99" cy="105" r="2.5" fill="white"/><circle cx="133" cy="105" r="2.5" fill="white"/>
+  <path d="M80 92 Q90 86 103 92" stroke="#d4820a" stroke-width="2.5" fill="none"/>
+  <path d="M117 92 Q130 86 140 92" stroke="#d4820a" stroke-width="2.5" fill="none"/>
+  <ellipse cx="110" cy="122" rx="5" ry="3.5" fill="#d4820a"/>
+  <path d="M100 130 Q110 137 120 130" stroke="#d4820a" stroke-width="1.5" fill="none"/>`,
+      bo: '.55',
+      bodyClass: 'tremble',
+      extra: `<g class="rose-shake" style="transform-origin:155px 210px"><line x1="0" y1="0" x2="0" y2="30" stroke="#2d6a2d" stroke-width="2.5" transform="translate(155,210) rotate(-30)"/><ellipse cx="153" cy="199" rx="7" ry="9" fill="#e63946"/><ellipse cx="150" cy="201" rx="5" ry="7" fill="#c0392b"/></g>
+  <ellipse cx="155" cy="90" rx="4" ry="6" fill="rgba(135,206,250,.5)"><animate attributeName="cy" from="85" to="100" dur="1.5s" repeatCount="indefinite"/><animate attributeName="opacity" from=".7" to="0" dur="1.5s" repeatCount="indefinite"/></ellipse>
+  <ellipse cx="148" cy="95" rx="3" ry="4" fill="rgba(135,206,250,.4)"><animate attributeName="cy" from="92" to="105" dur="2s" repeatCount="indefinite"/><animate attributeName="opacity" from=".5" to="0" dur="2s" repeatCount="indefinite"/></ellipse>`
+    });
+
+    // CELEBRATE: jumping, arms waving, happy squint
+    document.getElementById('cat-celebrate').innerHTML = catSVG({
+      bodyClass: 'celeb-jump',
+      arms: `<g class="arm-wave-l"><rect x="40" y="140" width="22" height="60" rx="10" fill="#1a1a2e" transform="rotate(-30,51,170)"/><circle cx="38" cy="198" r="10" fill="#e8802a"/></g>
+  <g class="arm-wave-r"><rect x="158" y="140" width="22" height="60" rx="10" fill="#1a1a2e" transform="rotate(30,169,170)"/><circle cx="182" cy="198" r="10" fill="#e8802a"/></g>`,
+      face: `<path d="M83 108 Q93 98 103 108" stroke="#1a1a2e" stroke-width="3" fill="none" stroke-linecap="round"/>
+  <path d="M117 108 Q127 98 137 108" stroke="#1a1a2e" stroke-width="3" fill="none" stroke-linecap="round"/>
+  <ellipse cx="110" cy="122" rx="5" ry="3.5" fill="#d4820a"/>
+  <path d="M95 128 Q110 145 125 128" stroke="#d4820a" stroke-width="2" fill="rgba(200,80,80,.3)"/>`,
+      bo: '.6',
+      extra: `<text x="70" y="28" font-size="20" fill="#e63946">♥<animate attributeName="y" from="28" to="15" dur="1s" repeatCount="indefinite"/><animate attributeName="opacity" from="1" to="0" dur="1s" repeatCount="indefinite"/></text>
+  <text x="135" y="22" font-size="16" fill="#ff2d87">♥<animate attributeName="y" from="22" to="8" dur="1.3s" repeatCount="indefinite"/><animate attributeName="opacity" from="1" to="0" dur="1.3s" repeatCount="indefinite"/></text>
+  <text x="100" y="18" font-size="22" fill="#e63946">♥<animate attributeName="y" from="18" to="2" dur="0.8s" repeatCount="indefinite"/><animate attributeName="opacity" from="1" to="0" dur="0.8s" repeatCount="indefinite"/></text>`
+    });
+
+    // SAD: drooping body, ears droop more, tear
+    document.getElementById('cat-sad').innerHTML = catSVG({
+      bodyClass: 'sad-droop',
+      ears: `<g class="ear-droop-l"><polygon points="70,80 50,45 85,68" fill="#e8802a"/><polygon points="72,78 55,50 83,68" fill="#f4a940"/></g>
+  <g class="ear-droop-r"><polygon points="150,80 170,45 135,68" fill="#e8802a"/><polygon points="148,78 165,50 137,68" fill="#f4a940"/></g>`,
+      face: `<ellipse cx="93" cy="112" rx="10" ry="11" fill="white"/><ellipse cx="127" cy="112" rx="10" ry="11" fill="white"/>
+  <circle cx="93" cy="114" r="6" fill="#1a1a2e"/><circle cx="127" cy="114" r="6" fill="#1a1a2e"/>
+  <circle cx="95" cy="112" r="2" fill="white"/><circle cx="129" cy="112" r="2" fill="white"/>
+  <path d="M80 98 Q90 102 103 98" stroke="#d4820a" stroke-width="2.5" fill="none"/>
+  <path d="M117 98 Q130 102 140 98" stroke="#d4820a" stroke-width="2.5" fill="none"/>
+  <ellipse class="tear" cx="130" cy="125" rx="3" ry="5" fill="rgba(135,206,250,.6)"/>
+  <ellipse class="tear" cx="88" cy="126" rx="2.5" ry="4" fill="rgba(135,206,250,.4)" style="animation-delay:.7s"/>
+  <ellipse cx="110" cy="126" rx="5" ry="3.5" fill="#d4820a"/>
+  <path d="M100 136 Q110 130 120 136" stroke="#d4820a" stroke-width="1.5" fill="none"/>`,
+      bo: '.3',
+      extra: `<g transform="translate(90,262) rotate(-80)"><line x1="0" y1="0" x2="0" y2="20" stroke="#2d6a2d" stroke-width="2"/><ellipse cx="0" cy="-2" rx="6" ry="7" fill="#e63946" opacity=".5"/></g>`
+    });
+
+    // === PARTICLES ===
+    const pc = document.getElementById('particles');
+    ['🍁', '🍂', '♪', '♫', '💗', '🎸', '🌹', '⭐', '🎤'].forEach((e, i) => { for (let j = 0; j < (i < 4 ? 3 : 2); j++) { const p = document.createElement('div'); p.className = 'particle'; p.textContent = e; p.style.left = Math.random() * 100 + '%'; p.style.fontSize = (1 + Math.random() * 1.5) + 'rem'; p.style.animationDuration = (10 + Math.random() * 12) + 's'; p.style.animationDelay = (Math.random() * 15) + 's'; pc.appendChild(p) } });
+
+    // === EQ BARS ===
+    const eq = document.getElementById('eq-bars');
+    const eqC = ['#ff1493', '#ff6600', '#ffe600', '#00cc44', '#0066ff', '#00fff7', '#ff0033'];
+    for (let i = 0; i < 30; i++) { const b = document.createElement('div'); b.className = 'eq-bar'; b.style.setProperty('--mh', (10 + Math.random() * 40) + 'px'); b.style.animationDuration = (.3 + Math.random() * .5) + 's'; b.style.animationDelay = (Math.random() * .5) + 's'; b.style.background = eqC[i % eqC.length]; eq.appendChild(b) }
+
+    // === CHICHA STARS ===
+    const stE = ['✦', '✧', '★', '☆', '✶'];
+    for (let i = 0; i < 8; i++) { const s = document.createElement('div'); s.className = 'chicha-star'; s.textContent = stE[i % stE.length]; s.style.left = Math.random() * 90 + 5 + '%'; s.style.top = Math.random() * 90 + 5 + '%'; s.style.animationDelay = (Math.random() * 3) + 's'; s.style.color = eqC[Math.floor(Math.random() * eqC.length)]; document.body.appendChild(s) }
+
+    // === NAVIGATION ===
+    function goTo(id) {
+      document.querySelectorAll('.scene').forEach(s => s.classList.add('hidden'));
+      document.getElementById(id).classList.remove('hidden');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      if (id === 'scene-poem') animatePoem();
+      if (id === 'scene-yes') burstHearts();
+    }
+
+    function animatePoem() {
+      document.querySelectorAll('#scene-poem .poem-text').forEach(p => { setTimeout(() => p.classList.add('vis'), parseInt(p.dataset.d) || 0) });
+      setTimeout(() => document.getElementById('poem-author').classList.add('vis'), 4000);
+      setTimeout(() => document.getElementById('btn-to-q').style.opacity = '1', 4500);
+    }
+
+    let dC = 0;
+    function dodgeNo() {
+      dC++; const b = document.getElementById('btn-no');
+      if (dC <= 3) { const x = (Math.random() - .5) * 200, y = (Math.random() - .5) * 100; b.style.transform = `translate(${x}px,${y}px)` }
+      if (dC === 2) b.textContent = '¿Seguro? 😿';
+      if (dC === 3) { b.textContent = '¡Piénsalo bien! 🥺'; b.style.fontSize = '.9rem' }
+      if (dC >= 4) { b.textContent = 'Ok... 😢'; b.style.transform = 'none' }
+    }
+
+    function burstHearts() {
+      const c = document.getElementById('hearts-burst'); c.innerHTML = '';
+      const em = ['💗', '❤️', '💕', '🌹', '✨', '🎵', '🍂', '💖', '⭐', '🎸'];
+      for (let i = 0; i < 50; i++) { setTimeout(() => { const h = document.createElement('div'); h.className = 'burst-h'; h.textContent = em[Math.floor(Math.random() * em.length)]; h.style.left = (40 + Math.random() * 20) + '%'; h.style.top = (40 + Math.random() * 20) + '%'; h.style.setProperty('--tx', ((Math.random() - .5) * innerWidth * .8) + 'px'); h.style.setProperty('--ty', ((Math.random() - .5) * innerHeight * .8) + 'px'); h.style.setProperty('--rot', ((Math.random() - .5) * 720) + 'deg'); h.style.fontSize = (1.5 + Math.random() * 2) + 'rem'; c.appendChild(h); setTimeout(() => h.remove(), 3000) }, i * 70) }
+    }
+
+    // === PLAN PICKER ===
+    function pickPlan(btn, text) {
+      document.querySelectorAll('.plan-opt').forEach(b => b.classList.remove('selected'));
+      btn.classList.add('selected');
+      document.getElementById('plan-text').textContent = text;
+      const result = document.getElementById('plan-result');
+      result.style.display = 'block';
+      result.style.animation = 'cApp .5s ease-out';
+    }
+
+    // === BOSSA NOVA MUSIC ENGINE ===
+    let audioCtx, elevatorPlaying = false, elevatorNodes = {}, scheduleTimer;
+
+    function createElevatorMusic() {
+      if (audioCtx && audioCtx.state === 'running') { elevatorPlaying = true; return; }
+      audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+
+      // Master chain: compressor → filter → gain → destination
+      const comp = audioCtx.createDynamicsCompressor();
+      comp.threshold.value = -20; comp.ratio.value = 4;
+      const warmth = audioCtx.createBiquadFilter();
+      warmth.type = 'lowpass'; warmth.frequency.value = 4500; warmth.Q.value = 0.5;
+      const master = audioCtx.createGain();
+      master.gain.value = 0.69;
+      comp.connect(warmth); warmth.connect(master); master.connect(audioCtx.destination);
+      elevatorNodes.master = master;
+
+      // Reverb (convolver with noise impulse)
+      const rev = audioCtx.createConvolver();
+      const revLen = audioCtx.sampleRate * 1.5, revBuf = audioCtx.createBuffer(2, revLen, audioCtx.sampleRate);
+      for (let c = 0; c < 2; c++) { const d = revBuf.getChannelData(c); for (let i = 0; i < revLen; i++) d[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / revLen, 2.5); }
+      rev.buffer = revBuf;
+      const revGain = audioCtx.createGain(); revGain.gain.value = 0.25;
+      rev.connect(revGain); revGain.connect(master);
+      const dry = audioCtx.createGain(); dry.gain.value = 0.8;
+      dry.connect(comp); dry.connect(rev);
+
+      // Pop progression: I → V → vi → IV (C → G → Am → F) x2 with variations
+      const chords = [
+        { bass: 130.8, notes: [261.6, 329.6, 392.0, 523.3] },  // C (I)
+        { bass: 196.0, notes: [246.9, 293.7, 392.0, 493.9] },  // G (V)
+        { bass: 220.0, notes: [261.6, 329.6, 440.0, 523.3] },  // Am (vi)
+        { bass: 174.6, notes: [261.6, 349.2, 440.0, 523.3] },  // F (IV)
+        { bass: 130.8, notes: [261.6, 329.6, 392.0, 523.3] },  // C
+        { bass: 196.0, notes: [246.9, 293.7, 392.0, 493.9] },  // G
+        { bass: 220.0, notes: [261.6, 329.6, 440.0, 523.3] },  // Am
+        { bass: 174.6, notes: [261.6, 349.2, 440.0, 523.3] },  // F
+      ];
+
+      // Pop melody: catchy singable phrases (C major pentatonic, stepwise motion)
+      const melodies = [
+        [523.3, 493.9, 440.0, 493.9], // C B A B (descend and return)
+        [392.0, 440.0, 493.9, 523.3], // G A B C (ascending run)
+        [523.3, 523.3, 440.0, 392.0], // C C A G (hook repeat)
+        [440.0, 493.9, 523.3, 587.3], // A B C D (push up)
+        [587.3, 523.3, 493.9, 440.0], // D C B A (cascading down)
+        [392.0, 440.0, 523.3, 440.0], // G A C A (bounce)
+        [523.3, 587.3, 523.3, 493.9], // C D C B (ornament)
+        [440.0, 392.0, 440.0, 523.3], // A G A C (resolve up)
+      ];
+
+      const BPM = 110, beatSec = 60 / BPM;
+      let beatTime = audioCtx.currentTime + 0.1, chordIdx = 0, barBeat = 0;
+      elevatorPlaying = true;
+
+      function noise(t, dur, vol) {
+        const sz = audioCtx.sampleRate * dur, buf = audioCtx.createBuffer(1, sz, audioCtx.sampleRate);
+        const d = buf.getChannelData(0); for (let i = 0; i < sz; i++) d[i] = (Math.random() * 2 - 1);
+        const src = audioCtx.createBufferSource(); src.buffer = buf;
+        const hp = audioCtx.createBiquadFilter(); hp.type = 'highpass'; hp.frequency.value = 7000;
+        const g = audioCtx.createGain();
+        g.gain.setValueAtTime(0, t); g.gain.linearRampToValueAtTime(vol, t + 0.001);
+        g.gain.exponentialRampToValueAtTime(0.001, t + dur);
+        src.connect(hp); hp.connect(g); g.connect(dry);
+        src.start(t); src.stop(t + dur);
+      }
+
+      function playNote(freq, t, dur, vol, type, dest) {
+        const o = audioCtx.createOscillator(), g = audioCtx.createGain();
+        o.type = type || 'sine'; o.frequency.value = freq;
+        // Slight detune for warmth
+        o.detune.value = (Math.random() - 0.5) * 6;
+        g.gain.setValueAtTime(0, t);
+        g.gain.linearRampToValueAtTime(vol, t + 0.015);
+        g.gain.setValueAtTime(vol * 0.7, t + dur * 0.3);
+        g.gain.linearRampToValueAtTime(0, t + dur);
+        o.connect(g); g.connect(dest || dry);
+        o.start(t); o.stop(t + dur + 0.05);
+      }
+
+      function scheduleBeat() {
+        if (!elevatorPlaying) return;
+        const ch = chords[chordIdx % chords.length];
+        const mel = melodies[chordIdx % melodies.length];
+        const beat = barBeat; // 0-7 (8 eighth notes per bar)
+
+        // === PIANO CHORDS (pop comping: steady eighth note pulse) ===
+        if (beat === 0 || beat === 2 || beat === 4 || beat === 6) {
+          ch.notes.forEach(f => {
+            playNote(f * 0.5, beatTime, beatSec * 0.9, 0.035 + (beat === 0 ? 0.02 : 0), 'triangle');
+          });
+        }
+
+        // === BASS (pop root notes on 1 and 5, octave on 3) ===
+        if (beat === 0) {
+          playNote(ch.bass * 0.5, beatTime, beatSec * 1.8, 0.13, 'sine');
+        }
+        if (beat === 4) {
+          playNote(ch.bass * 0.5 * 1.0, beatTime, beatSec * 1.2, 0.08, 'sine');
+        }
+        if (beat === 2 && Math.random() > 0.4) {
+          playNote(ch.bass, beatTime, beatSec * 0.6, 0.05, 'sine');
+        }
+
+        // === MELODY (pop: more frequent, singable phrases) ===
+        if (beat === 0 || beat === 4 || (beat === 2 && Math.random() > 0.3) || (beat === 6 && Math.random() > 0.5)) {
+          const mIdx = (chordIdx * 4 + Math.floor(beat / 2)) % (mel.length);
+          playNote(mel[mIdx] * 0.5, beatTime, beatSec * 1.5, 0.04, 'triangle');
+        }
+
+        // === PERCUSSION (pop beat) ===
+        // Hi-hat: steady eighths, accented on beats
+        noise(beatTime, beat % 2 === 0 ? 0.04 : 0.025, beat % 2 === 0 ? 0.04 : 0.02);
+
+        // Kick on 1 and 5 (beats 1 and 3 in quarter notes)
+        if (beat === 0 || beat === 4) {
+          const k = audioCtx.createOscillator(), kg = audioCtx.createGain();
+          k.type = 'sine'; k.frequency.setValueAtTime(150, beatTime);
+          k.frequency.exponentialRampToValueAtTime(40, beatTime + 0.1);
+          kg.gain.setValueAtTime(0.14, beatTime);
+          kg.gain.exponentialRampToValueAtTime(0.001, beatTime + 0.15);
+          k.connect(kg); kg.connect(dry); k.start(beatTime); k.stop(beatTime + 0.2);
+        }
+
+        // Snare on 3 and 7 (beats 2 and 4 in quarter notes) 
+        if (beat === 2 || beat === 6) {
+          noise(beatTime, 0.08, 0.06);
+          const sn = audioCtx.createOscillator(), sg = audioCtx.createGain();
+          sn.type = 'triangle'; sn.frequency.value = 180;
+          sg.gain.setValueAtTime(0.06, beatTime);
+          sg.gain.exponentialRampToValueAtTime(0.001, beatTime + 0.07);
+          sn.connect(sg); sg.connect(dry); sn.start(beatTime); sn.stop(beatTime + 0.1);
+        }
+
+        // Extra kick on the and-of-3 for pop groove
+        if (beat === 5 && Math.random() > 0.5) {
+          const k2 = audioCtx.createOscillator(), kg2 = audioCtx.createGain();
+          k2.type = 'sine'; k2.frequency.setValueAtTime(130, beatTime);
+          k2.frequency.exponentialRampToValueAtTime(40, beatTime + 0.08);
+          kg2.gain.setValueAtTime(0.08, beatTime);
+          kg2.gain.exponentialRampToValueAtTime(0.001, beatTime + 0.1);
+          k2.connect(kg2); kg2.connect(dry); k2.start(beatTime); k2.stop(beatTime + 0.12);
+        }
+
+        // Advance
+        barBeat = (barBeat + 1) % 8;
+        if (barBeat === 0) chordIdx++;
+        beatTime += beatSec * 0.5; // eighth notes
+
+        scheduleTimer = setTimeout(scheduleBeat, (beatSec * 0.5 * 0.85) * 1000);
+      }
+
+      scheduleBeat();
+    }
+
+    function stopElevatorMusic() {
+      elevatorPlaying = false;
+      if (scheduleTimer) clearTimeout(scheduleTimer);
+      if (elevatorNodes.master && audioCtx) {
+        elevatorNodes.master.gain.linearRampToValueAtTime(0, audioCtx.currentTime + 0.8);
+        setTimeout(() => { if (audioCtx) audioCtx.suspend(); }, 900);
+      }
+    }
+
+    function fadeElevatorTo(vol, dur) {
+      if (elevatorNodes.master && audioCtx) {
+        elevatorNodes.master.gain.linearRampToValueAtTime(vol, audioCtx.currentTime + (dur || 0.5));
+      }
+    }
+
+    // === MUSIC CONTROL BUTTON ===
+    let musicStarted = false;
+    const musicBtn = document.createElement('button');
+    musicBtn.id = 'music-toggle';
+    musicBtn.innerHTML = '🎵 Música';
+    musicBtn.style.cssText = 'position:fixed;bottom:15px;right:15px;z-index:999;font-family:VT323,monospace;font-size:1rem;background:rgba(8,6,14,.85);color:var(--neon-cyan);border:1px solid var(--neon-cyan);padding:.4rem .8rem;cursor:pointer;backdrop-filter:blur(5px);transition:all .3s;border-radius:2px;';
+    musicBtn.onmouseenter = () => musicBtn.style.background = 'rgba(0,255,247,.15)';
+    musicBtn.onmouseleave = () => musicBtn.style.background = 'rgba(8,6,14,.85)';
+    musicBtn.onclick = () => {
+      if (!musicStarted) {
+        createElevatorMusic();
+        musicStarted = true;
+        musicBtn.innerHTML = '🔊 Música ON';
+        musicBtn.style.borderColor = 'var(--neon-green)';
+        musicBtn.style.color = 'var(--neon-green)';
+      } else if (elevatorPlaying) {
+        stopElevatorMusic();
+        musicBtn.innerHTML = '🔇 Música OFF';
+        musicBtn.style.borderColor = 'rgba(253,240,213,.3)';
+        musicBtn.style.color = 'rgba(253,240,213,.4)';
+      } else {
+        if (audioCtx && audioCtx.state === 'suspended') audioCtx.resume();
+        createElevatorMusic();
+        musicBtn.innerHTML = '🔊 Música ON';
+        musicBtn.style.borderColor = 'var(--neon-green)';
+        musicBtn.style.color = 'var(--neon-green)';
+      }
+    };
+    document.body.appendChild(musicBtn);
+
+    // When entering YES scene, fade elevator and load Diblue
+    const _origGoTo = window._goTo = goTo;
+    window.goTo = goTo = function (id) {
+      _origGoTo(id);
+      if (id === 'scene-yes') {
+        if (elevatorPlaying) fadeElevatorTo(0.02, 1.5);
+        // Load Diblue embed (lazy load + autoplay attempt after user interaction)
+        const dp = document.getElementById('diblue-player');
+        if (dp && !dp.src.includes('bandcamp')) {
+          dp.src = 'https://bandcamp.com/EmbeddedPlayer/track=1207983379/size=large/bgcol=08060e/linkcol=ff2d87/tracklist=false/artwork=small/transparent=true/';
+        }
+      } else if (id !== 'scene-yes' && musicStarted && elevatorPlaying) {
+        fadeElevatorTo(0.18, 0.5);
+      }
+    };
+
+  </script>
+</body>
+
+</html>
